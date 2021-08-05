@@ -1,0 +1,57 @@
+{% extends 'app/base.html' %}
+{% block title %} Additems List{% endblock %}
+{% block content %}
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages%}
+	<div class="alert alert-{{m.tags}} alert-dismissible">
+		<button type="button" class="close" data-dismiss="alert">&times;
+		</button>
+		{{m}}
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="row">
+		<div class="card col-md-4 shadow-lg mx-2 h-100">
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+				<h3 class="text-center text-light bg-secondary p-2 border rounded">Add Items</h3>
+				{% for j in q %}
+					{{j}}
+				{% endfor %}
+				<div class="row">
+					<div class="col">
+						<input type="reset" name="Reset" class="btn btn-outline-info my-2 form-control">
+					</div>
+					<div class="col">
+						<input type="submit" value="Create" class="btn btn-outline-success my-2 mx-2 form-control">
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+		<div class="card col-md shadow-lg mx-2">
+			<div class="card-body">
+				<h3 class="text-center text-light bg-primary p-2 border rounded">List of Items</h3>
+				<table class="table table-borderless table-hover">
+					<tr>
+						<th>s.no</th>
+						<th>Item Name</th>
+						<th>price</th>
+						<th>operations</th>
+					</tr>
+					{% for k in a %}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td><a href="{% url 'itvw' k.id %}">{{k.Itname}}</a></td>
+						<td>{{k.price}}</td>
+						<td><a href="{% url 'itup' k.id %}" class="btn btn-outline-primary mx-2">Update</a><a href="{% url 'itd' k.id %}" class="btn btn-outline-danger mx-2">Delete</a></td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
